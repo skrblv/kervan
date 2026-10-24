@@ -1,0 +1,137 @@
+@import 'tailwindcss';
+
+/*
+ * Kervan design tokens.
+ * Paper and ink with one accent: the deep turquoise of Central Asian tilework,
+ * used for selection, focus and technical annotation. Red and ochre are reserved
+ * for errors and warnings so they never compete with the accent.
+ */
+@theme {
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-paper: #efede7;
+  --color-sheet: #faf9f6;
+  --color-ink: #16181b;
+  --color-ink-2: #43474d;
+  --color-ink-3: #62666c;
+  --color-rule: #d7d4cb;
+  --color-rule-2: #ada99f;
+  --color-field: #8c887f;
+  --color-accent: #0b6b66;
+  --color-accent-strong: #07524e;
+  --color-accent-tint: #dae9e5;
+  --color-warn: #7e5200;
+  --color-warn-tint: #f3e5c2;
+  --color-error: #a3301b;
+  --color-error-tint: #f4dcd3;
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+
+  --animate-arrive: arrive 360ms ease-out both;
+  @keyframes arrive {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-size: 15px;
+    line-height: 1.55;
+    font-feature-settings: 'kern', 'liga';
+  }
+
+  ::selection {
+    @apply bg-accent-tint text-ink;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+/* Small mono label used for section numbers and codes. */
+@utility kicker {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+}
+
+/* The stitch line: Kervan's one recurring graphic device (a seam, and a caravan route). */
+@utility stitch {
+  background-image: linear-gradient(to right, currentColor 55%, transparent 0);
+  background-size: 7px 1.5px;
+  background-repeat: repeat-x;
+  background-position: left center;
+}
+
+@utility sr-only-focusable {
+  &:not(:focus) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  body {
+    background: white;
+    font-size: 11px;
+  }
+}
